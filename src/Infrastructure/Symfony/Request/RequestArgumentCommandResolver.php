@@ -36,7 +36,7 @@ class RequestArgumentCommandResolver implements ArgumentValueResolverInterface
     {
         $supportedCommands = array_filter(
             get_declared_classes(),
-            static fn(string $className) => str_contains($className, self::COMMAND_NAMESPACE)
+            static fn (string $className) => str_contains($className, self::COMMAND_NAMESPACE)
         );
 
         return in_array($argument->getType(), $supportedCommands, true);
@@ -82,7 +82,7 @@ class RequestArgumentCommandResolver implements ArgumentValueResolverInterface
                 );
                 $content->uuid = $routeParams['id'] ?? $routeParams['uuid'] ?? null;
             } else {
-                $content = (object)['uuid' => $routeParams['id'] ?? $routeParams['uuid'] ?? null];
+                $content = (object) ['uuid' => $routeParams['id'] ?? $routeParams['uuid'] ?? null];
                 if (isset($routeParams['type'])) {
                     $content->type = $routeParams['type'];
                 }
@@ -92,7 +92,6 @@ class RequestArgumentCommandResolver implements ArgumentValueResolverInterface
         }
 
         $this->checkProperties($argument->getType(), $requestContent);
-
 
         $object = $this->serializer->deserialize($requestContent, $argument->getType(), 'json');
 
