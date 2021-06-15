@@ -4,6 +4,14 @@ Hello! This is MVP of my new project. Return here later for more content.
 
 ## Development
 
+## Code quality
+
+Code quality checker and fixer is available. Run this command in PHP container's shell.
+
+```shell
+vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix
+```
+
 ### Tips & tricks
 
 #### Local user
