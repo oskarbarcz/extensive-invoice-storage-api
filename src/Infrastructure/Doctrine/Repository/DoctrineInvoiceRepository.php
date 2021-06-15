@@ -17,5 +17,4 @@ final class DoctrineInvoiceRepository extends ServiceEntityRepository
             Invoice::class
         );
     }
-
 }

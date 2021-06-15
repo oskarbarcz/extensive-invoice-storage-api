@@ -16,7 +16,7 @@ final class InvoiceType
     public function __construct(string $string)
     {
         if (!in_array($string, self::ALLOWED_TYPES, true)) {
-            throw new RuntimeException("Invalid invoice type");
+            throw new RuntimeException('Invalid invoice type');
         }
 
         $this->type = $string;
