@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Command;
 
-use App\Infrastructure\Symfony\Validator\IsInvoiceType;
+use App\Infrastructure\Symfony\Validator as ApplicationAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CreateInvoiceCommand
@@ -12,7 +12,7 @@ class CreateInvoiceCommand
     #[Assert\NotBlank]
     private string $name;
 
-    #[IsInvoiceType]
+    #[ApplicationAssert\IsInvoiceType]
     private string $type;
 
     public function __construct(string $name, string $type)

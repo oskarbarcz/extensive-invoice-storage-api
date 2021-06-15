@@ -20,7 +20,7 @@ class Invoice
     #[ORM\Column('name', type: 'string')]
     private string $name;
 
-    #[ORM\Column('file_id', type: 'uuid')]
+    #[ORM\Column('file_id', type: 'uuid', nullable: true)]
     private ?Uuid $file = null;
 
     #[ORM\Column('type', type: 'string')]
@@ -60,7 +60,7 @@ class Invoice
 
     public function setFile(?Uuid $file): void
     {
-        if($this->file !== null){
+        if (null !== $this->file) {
             throw new RuntimeException('Invoice file cannot be overwritten.');
         }
 
