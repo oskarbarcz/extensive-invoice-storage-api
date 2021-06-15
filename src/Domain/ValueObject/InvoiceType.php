@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\ValueObject;
 
+use RuntimeException;
+
 final class InvoiceType
 {
     private const COST = 'cost';

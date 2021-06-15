@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Infrastructure\Symfony\Validator;
 
 use App\Domain\ValueObject\InvoiceType;
-use App\Infrastructure\Symfony\Constraint\IsInvoiceType;
 use RuntimeException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
