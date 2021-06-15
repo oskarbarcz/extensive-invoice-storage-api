@@ -12,5 +12,7 @@ class InvoiceController extends BaseController
     public function create(CreateInvoiceCommand $command): JsonResponse
     {
         $this->handleCommand($command);
+
+        return new JsonResponse('OK');
     }
 }
