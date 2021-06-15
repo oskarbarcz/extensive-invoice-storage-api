@@ -3,7 +3,7 @@ WORKDIR "/application"
 
 # Install selected extensions and other stuff
 RUN apt-get update \
-    && apt-get -y --no-install-recommends install  php8.0-amqp php8.0-ds php8.0-http php8.0-mysql php8.0-redis php8.0-uuid php8.0-yaml \
+    && apt-get -y --no-install-recommends install  php8.0-amqp php8.0-ds php8.0-mysql php8.0-redis php8.0-uuid php8.0-yaml \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 # Install git

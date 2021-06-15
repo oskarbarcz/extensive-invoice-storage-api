@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# This command is created as helper for local environment to gain proper access
+sudo chown -R "$USER" ../.
+sudo chown -R "$USER" ../*
+echo "Privileges added successfully for user $USER"
