@@ -133,6 +133,15 @@
     "php-cs-fixer/diff": {
         "version": "v2.0.2"
     },
+    "phpdocumentor/reflection-common": {
+        "version": "2.2.0"
+    },
+    "phpdocumentor/reflection-docblock": {
+        "version": "5.2.2"
+    },
+    "phpdocumentor/type-resolver": {
+        "version": "1.4.0"
+    },
     "psr/cache": {
         "version": "2.0.0"
     },
@@ -147,6 +156,9 @@
     },
     "roave/security-advisories": {
         "version": "dev-latest"
+    },
+    "symfony/amqp-messenger": {
+        "version": "v5.3.0"
     },
     "symfony/cache": {
         "version": "v5.3.0"
@@ -177,6 +189,9 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v5.3.1"
+    },
+    "symfony/doctrine-messenger": {
+        "version": "v5.3.0"
     },
     "symfony/dotenv": {
         "version": "v5.3.0"
@@ -245,6 +260,18 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/messenger": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "e9a414b113ceadbf4e52abe37bf8f1b443f06ccb"
+        },
+        "files": [
+            "config/packages/messenger.yaml"
+        ]
+    },
     "symfony/options-resolver": {
         "version": "v5.3.0"
     },
@@ -281,7 +308,16 @@
     "symfony/profiler-pack": {
         "version": "v1.0.5"
     },
+    "symfony/property-access": {
+        "version": "v5.3.0"
+    },
+    "symfony/property-info": {
+        "version": "v5.3.1"
+    },
     "symfony/proxy-manager-bridge": {
+        "version": "v5.3.0"
+    },
+    "symfony/redis-messenger": {
         "version": "v5.3.0"
     },
     "symfony/routing": {
@@ -308,6 +344,9 @@
     },
     "symfony/serializer": {
         "version": "v5.3.1"
+    },
+    "symfony/serializer-pack": {
+        "version": "v1.0.4"
     },
     "symfony/service-contracts": {
         "version": "v2.4.0"
@@ -378,5 +417,8 @@
     },
     "twig/twig": {
         "version": "v3.3.2"
+    },
+    "webmozart/assert": {
+        "version": "1.10.0"
     }
 }

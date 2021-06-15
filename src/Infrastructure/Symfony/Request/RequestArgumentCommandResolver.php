@@ -93,6 +93,7 @@ class RequestArgumentCommandResolver implements ArgumentValueResolverInterface
 
         $this->checkProperties($argument->getType(), $requestContent);
 
+
         $object = $this->serializer->deserialize($requestContent, $argument->getType(), 'json');
 
         if (!empty($this->getErrors($object))) {
