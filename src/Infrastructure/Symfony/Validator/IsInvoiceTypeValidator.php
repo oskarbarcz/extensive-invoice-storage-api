@@ -1,0 +1,30 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Infrastructure\Symfony\Validator;
+
+use App\Domain\ValueObject\InvoiceType;
+use App\Infrastructure\Symfony\Constraint\IsInvoiceType;
+use RuntimeException;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+
+final class IsInvoiceTypeValidator extends ConstraintValidator
+{
+    public function validate($value, Constraint $constraint): void
+    {
+        if (!$constraint instanceof IsInvoiceType) {
+            throw new UnexpectedTypeException($constraint, IsInvoiceType::class);
+        }
+
+        try{
+           new InvoiceType($value);
+        }  catch(RuntimeException $e){
+            $this->context->buildViolation($constraint->message)
+                          ->setParameter('{{ string }}', $value)
+                          ->addViolation();
+        }
+    }
+}

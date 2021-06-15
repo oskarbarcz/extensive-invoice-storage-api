@@ -6,6 +6,7 @@ namespace App\Domain;
 
 use App\Infrastructure\Doctrine\Repository\DoctrineInvoiceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use RuntimeException;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: DoctrineInvoiceRepository::class)]
@@ -20,16 +21,15 @@ class Invoice
     private string $name;
 
     #[ORM\Column('file_id', type: 'uuid')]
-    private Uuid $file;
+    private ?Uuid $file = null;
 
     #[ORM\Column('type', type: 'string')]
     private string $type;
 
-    public function __construct(Uuid $id, string $name, Uuid $file, string $type)
+    public function __construct(Uuid $id, string $name, string $type)
     {
         $this->id = $id;
         $this->name = $name;
-        $this->file = $file;
         $this->type = $type;
     }
 
@@ -53,13 +53,17 @@ class Invoice
         $this->name = $name;
     }
 
-    public function getFile(): Uuid
+    public function getFile(): ?Uuid
     {
         return $this->file;
     }
 
-    public function setFile(Uuid $file): void
+    public function setFile(?Uuid $file): void
     {
+        if($this->file !== null){
+            throw new RuntimeException('Invoice file cannot be overwritten.');
+        }
+
         $this->file = $file;
     }
 
