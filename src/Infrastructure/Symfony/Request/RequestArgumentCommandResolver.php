@@ -82,7 +82,7 @@ class RequestArgumentCommandResolver implements ArgumentValueResolverInterface
                 );
                 $content->uuid = $routeParams['id'] ?? $routeParams['uuid'] ?? null;
             } else {
-                $content = (object) ['uuid' => $routeParams['id'] ?? $routeParams['uuid'] ?? null];
+                $content = (object) ['id' => $routeParams['id'] ?? $routeParams['uuid'] ?? null];
                 if (isset($routeParams['type'])) {
                     $content->type = $routeParams['type'];
                 }

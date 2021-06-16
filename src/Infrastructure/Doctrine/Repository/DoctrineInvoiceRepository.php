@@ -9,6 +9,7 @@ use App\Domain\Repository\InvoiceRepository;
 use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\Uuid;
 
 final class DoctrineInvoiceRepository extends ServiceEntityRepository implements InvoiceRepository
 {
@@ -23,6 +24,14 @@ final class DoctrineInvoiceRepository extends ServiceEntityRepository implements
     public function add(Invoice $invoice): void
     {
         $this->_em->persist($invoice);
+        $this->_em->flush();
+    }
+
+    public function remove(Uuid $id): void
+    {
+        $invoice =$this->findOneById($id);
+
+        $this->_em->remove($invoice);
         $this->_em->flush();
     }
 
