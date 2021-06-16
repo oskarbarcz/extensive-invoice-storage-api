@@ -8,7 +8,6 @@ use App\Application\Query\GetInvoicesByMonthQuery;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Json;
 
 class InvoiceController extends BaseController
 {
@@ -24,7 +23,7 @@ class InvoiceController extends BaseController
     public function getByMonth(GetInvoicesByMonthQuery $query, int $month, int $year): JsonResponse
     {
         $invoices = $query($month, $year);
-        $status = $invoices ===[] ?Response::HTTP_NO_CONTENT:Response::HTTP_OK;
+        $status = [] === $invoices ? Response::HTTP_NO_CONTENT : Response::HTTP_OK;
 
         return new JsonResponse($invoices, $status);
     }

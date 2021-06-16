@@ -29,7 +29,7 @@ final class DoctrineInvoiceRepository extends ServiceEntityRepository implements
 
     public function remove(Uuid $id): void
     {
-        $invoice =$this->findOneById($id);
+        $invoice = $this->findOneById($id);
 
         $this->_em->remove($invoice);
         $this->_em->flush();

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Application\Handler;
-
 
 use App\Application\Command\RemoveInvoiceCommand;
 use App\Domain\Repository\InvoiceRepository;
@@ -13,7 +11,8 @@ class RemoveInvoiceHandler implements MessageHandlerInterface
 {
     private InvoiceRepository $repository;
 
-    public function __construct(InvoiceRepository $repository) {
+    public function __construct(InvoiceRepository $repository)
+    {
         $this->repository = $repository;
     }
 
