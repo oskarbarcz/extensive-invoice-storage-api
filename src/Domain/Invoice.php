@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain;
 
 use App\Infrastructure\Doctrine\Repository\DoctrineInvoiceRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use RuntimeException;
 use Symfony\Component\Uid\Uuid;
@@ -26,11 +27,16 @@ class Invoice
     #[ORM\Column('type', type: 'string')]
     private string $type;
 
+    #[ORM\Column('created_at', type: 'datetime_immutable')]
+    private DateTimeImmutable $createdAt;
+
     public function __construct(Uuid $id, string $name, string $type)
     {
         $this->id = $id;
         $this->name = $name;
         $this->type = $type;
+
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function getId(): Uuid
@@ -75,5 +81,10 @@ class Invoice
     public function setType(string $type): void
     {
         $this->type = $type;
+    }
+
+    public function getCreatedAt(): DateTimeImmutable
+    {
+        return $this->createdAt;
     }
 }

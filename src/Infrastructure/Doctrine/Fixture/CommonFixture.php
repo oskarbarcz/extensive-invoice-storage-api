@@ -14,7 +14,7 @@ final class CommonFixture extends Fixture
     public function load(ObjectManager $manager): void
     {
         foreach (range(0, 10) as $i) {
-            $invoice = new Invoice(Uuid::v4(), "Invoice {$i}", Uuid::v4(), 'cost');
+            $invoice = new Invoice(Uuid::v4(), "Invoice {$i}", 'cost');
 
             $manager->persist($invoice);
         }
