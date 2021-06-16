@@ -9,7 +9,6 @@ use App\Domain\Repository\InvoiceRepository;
 use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use JetBrains\PhpStorm\ArrayShape;
 
 final class DoctrineInvoiceRepository extends ServiceEntityRepository implements InvoiceRepository
 {

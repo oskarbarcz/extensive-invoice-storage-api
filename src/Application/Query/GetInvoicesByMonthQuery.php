@@ -17,8 +17,6 @@ final class GetInvoicesByMonthQuery
 
     public function __invoke(int $month, int $year): array
     {
-        $invoices = $this->repository->getByMonth($month, $year);
-
-        return $invoices;
+        return $this->repository->getByMonth($month, $year);
     }
 }
