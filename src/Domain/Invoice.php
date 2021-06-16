@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Domain;
 
 use App\Infrastructure\Doctrine\Repository\DoctrineInvoiceRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use RuntimeException;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: DoctrineInvoiceRepository::class)]
@@ -19,18 +21,22 @@ class Invoice
     #[ORM\Column('name', type: 'string')]
     private string $name;
 
-    #[ORM\Column('file_id', type: 'uuid')]
-    private Uuid $file;
+    #[ORM\Column('file_id', type: 'uuid', nullable: true)]
+    private ?Uuid $file = null;
 
     #[ORM\Column('type', type: 'string')]
     private string $type;
 
-    public function __construct(Uuid $id, string $name, Uuid $file, string $type)
+    #[ORM\Column('created_at', type: 'datetime_immutable')]
+    private DateTimeImmutable $createdAt;
+
+    public function __construct(Uuid $id, string $name, string $type)
     {
         $this->id = $id;
         $this->name = $name;
-        $this->file = $file;
         $this->type = $type;
+
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function getId(): Uuid
@@ -53,13 +59,17 @@ class Invoice
         $this->name = $name;
     }
 
-    public function getFile(): Uuid
+    public function getFile(): ?Uuid
     {
         return $this->file;
     }
 
-    public function setFile(Uuid $file): void
+    public function setFile(?Uuid $file): void
     {
+        if (null !== $this->file) {
+            throw new RuntimeException('Invoice file cannot be overwritten.');
+        }
+
         $this->file = $file;
     }
 
@@ -71,5 +81,10 @@ class Invoice
     public function setType(string $type): void
     {
         $this->type = $type;
+    }
+
+    public function getCreatedAt(): DateTimeImmutable
+    {
+        return $this->createdAt;
     }
 }

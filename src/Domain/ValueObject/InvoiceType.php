@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\ValueObject;
 
+use App\Domain\Exception\ValueObjectException;
+
 final class InvoiceType
 {
     private const COST = 'cost';
@@ -13,10 +15,11 @@ final class InvoiceType
 
     private string $type;
 
+    /** @throws ValueObjectException */
     public function __construct(string $string)
     {
         if (!in_array($string, self::ALLOWED_TYPES, true)) {
-            throw new RuntimeException('Invalid invoice type');
+            throw new ValueObjectException('Invalid invoice type');
         }
 
         $this->type = $string;
