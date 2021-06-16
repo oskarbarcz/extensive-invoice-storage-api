@@ -3,16 +3,25 @@
 namespace App\Infrastructure\Symfony\Controller;
 
 use App\Application\Command\CreateInvoiceCommand;
+use App\Application\Query\GetInvoicesByMonthQuery;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class InvoiceController extends BaseController
 {
-    #[Route('api/v1/invoice')]
+    #[Route('api/v1/invoices')]
     public function create(CreateInvoiceCommand $command): JsonResponse
     {
         $this->handleCommand($command);
 
         return new JsonResponse('OK');
+    }
+
+    #[Route('api/v1/invoices/by-month/{year}/{month}')]
+    public function getByMonth(GetInvoicesByMonthQuery $query, int $month, int $year): JsonResponse
+    {
+        $invoices = $query($month, $year);
+
+        return new JsonResponse($invoices);
     }
 }

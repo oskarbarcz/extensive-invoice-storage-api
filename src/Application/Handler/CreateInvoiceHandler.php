@@ -9,7 +9,6 @@ use App\Domain\Invoice;
 use App\Domain\Repository\InvoiceRepository;
 use App\Domain\ValueObject\InvoiceType;
 use JetBrains\PhpStorm\NoReturn;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Uid\Uuid;
 

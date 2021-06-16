@@ -9,4 +9,6 @@ use App\Domain\Invoice;
 interface InvoiceRepository
 {
     public function add(Invoice $invoice): void;
+
+    public function getByMonth(int $month, int $year);
 }

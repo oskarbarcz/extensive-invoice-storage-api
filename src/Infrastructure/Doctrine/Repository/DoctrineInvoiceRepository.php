@@ -6,8 +6,10 @@ namespace App\Infrastructure\Doctrine\Repository;
 
 use App\Domain\Invoice;
 use App\Domain\Repository\InvoiceRepository;
+use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use JetBrains\PhpStorm\ArrayShape;
 
 final class DoctrineInvoiceRepository extends ServiceEntityRepository implements InvoiceRepository
 {
@@ -23,5 +25,25 @@ final class DoctrineInvoiceRepository extends ServiceEntityRepository implements
     {
         $this->_em->persist($invoice);
         $this->_em->flush();
+    }
+
+    /** @return Invoice[] */
+    public function getByMonth(int $month, int $year): array
+    {
+        $date = DateTimeImmutable::createFromFormat('n/Y', "{$month}/{$year}");
+
+        $queryBuilder = $this->createQueryBuilder('invoice');
+        $between = $queryBuilder
+            ->expr()
+            ->between('invoice.createdAt', ':start', ':end');
+
+        $query = $queryBuilder
+            ->where($between)
+            // TODO: add if where we'll check if file is not null
+            ->setParameter('start', $date->modify('first day of this month'))
+            ->setParameter('end', $date->modify('last day of this month'))
+            ->getQuery();
+
+        return $query->getArrayResult();
     }
 }
