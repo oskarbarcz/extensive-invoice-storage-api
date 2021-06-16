@@ -6,6 +6,6 @@ namespace App\Domain\Exception;
 
 use RuntimeException;
 
-class ValueObjectException extends AbstractDomainException
+class NotFoundException extends AbstractDomainException
 {
 }
