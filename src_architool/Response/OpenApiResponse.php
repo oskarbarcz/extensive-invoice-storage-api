@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ArchiTools\Response;
 
-use ArchiTools\Query\Item;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
