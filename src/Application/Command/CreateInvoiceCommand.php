@@ -4,21 +4,30 @@ declare(strict_types=1);
 
 namespace App\Application\Command;
 
-use App\Infrastructure\Symfony\Validator as ApplicationAssert;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CreateInvoiceCommand
 {
+    private Uuid | null $id;
+
     #[Assert\NotBlank]
     private string $name;
 
-    #[ApplicationAssert\IsInvoiceType]
+    #[Assert\Choice(choices: ['cost', 'revenue'])]
     private string $type;
 
     public function __construct(string $name, string $type)
     {
         $this->name = $name;
         $this->type = $type;
+
+        $this->id = Uuid::v4();
+    }
+
+    public function getId(): Uuid
+    {
+        return $this->id;
     }
 
     public function getName(): string

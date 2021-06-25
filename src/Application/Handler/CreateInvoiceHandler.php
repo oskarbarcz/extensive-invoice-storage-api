@@ -8,7 +8,6 @@ use App\Application\Command\CreateInvoiceCommand;
 use App\Domain\Invoice;
 use App\Domain\Repository\InvoiceRepository;
 use App\Domain\ValueObject\InvoiceType;
-use JetBrains\PhpStorm\NoReturn;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -18,7 +17,6 @@ class CreateInvoiceHandler implements MessageHandlerInterface
     {
     }
 
-    #[NoReturn]
     public function __invoke(CreateInvoiceCommand $command): void
     {
         $id = Uuid::v4();
