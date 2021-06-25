@@ -10,7 +10,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-abstract class BaseController extends AbstractController
+abstract class AbstractCqrsAwareController extends AbstractController
 {
     protected MessageBusInterface $messageBus;
     protected ValidatorInterface $validator;

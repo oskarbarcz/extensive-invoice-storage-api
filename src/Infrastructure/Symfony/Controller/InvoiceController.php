@@ -12,9 +12,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class InvoiceController extends BaseController
+class InvoiceController extends AbstractCqrsAwareController
 {
-    #[Route('api/v1/invoices', methods: ['POST'])]
+    #[Route(
+        path: 'api/v1/invoices',
+        name: 'api_invoice_create',
+        methods: ['POST'])
+    ]
     public function create(CreateInvoiceCommand $command): JsonResponse
     {
         $this->handleCommand($command);
@@ -22,7 +26,11 @@ class InvoiceController extends BaseController
         return OpenApiResponse::created($command->getId(), 'Invoice was successfully created.');
     }
 
-    #[Route('api/v1/invoices/by-month/{year}/{month}', methods: ['GET'])]
+    #[Route(
+        path: 'api/v1/invoices/by-month/{year}/{month}',
+        name: 'api_invoice_get-by-month',
+        methods: ['GET'])
+    ]
     public function getByMonth(GetInvoicesByMonthQuery $query, int $month, int $year): JsonResponse
     {
         $invoices = $query($month, $year);
@@ -31,7 +39,11 @@ class InvoiceController extends BaseController
         return OpenApiResponse::collection($invoices, $status);
     }
 
-    #[Route('api/v1/invoices/{id}', methods: ['DELETE'])]
+    #[Route(
+        path: 'api/v1/invoices/{id}',
+        name: 'api_invoice_remove',
+        methods: ['DELETE'])
+    ]
     public function remove(RemoveInvoiceCommand $command): JsonResponse
     {
         $this->handleCommand($command);
