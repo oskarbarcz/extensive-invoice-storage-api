@@ -15,7 +15,6 @@ final class CommonFixture extends Fixture
     {
         foreach (range(0, 10) as $i) {
             $invoice = new Invoice(Uuid::v4(), "Invoice {$i}", 'cost');
-
             $manager->persist($invoice);
         }
 

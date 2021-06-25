@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Symfony\Controller;
 
 use App\Application\Command\CreateInvoiceCommand;
 use App\Application\Command\RemoveInvoiceCommand;
 use App\Application\Query\GetInvoicesByMonthQuery;
+use ArchiTools\Response\OpenApiResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +19,7 @@ class InvoiceController extends BaseController
     {
         $this->handleCommand($command);
 
-        return new JsonResponse('OK', Response::HTTP_OK);
+        return OpenApiResponse::created($command->getId(), 'Invoice was successfully created.');
     }
 
     #[Route('api/v1/invoices/by-month/{year}/{month}', methods: ['GET'])]
@@ -25,7 +28,7 @@ class InvoiceController extends BaseController
         $invoices = $query($month, $year);
         $status = [] === $invoices ? Response::HTTP_NO_CONTENT : Response::HTTP_OK;
 
-        return new JsonResponse($invoices, $status);
+        return OpenApiResponse::collection($invoices, $status);
     }
 
     #[Route('api/v1/invoices/{id}', methods: ['DELETE'])]
@@ -33,6 +36,6 @@ class InvoiceController extends BaseController
     {
         $this->handleCommand($command);
 
-        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
+        return OpenApiResponse::empty();
     }
 }
