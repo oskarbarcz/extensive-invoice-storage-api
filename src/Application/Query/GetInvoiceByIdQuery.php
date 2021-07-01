@@ -14,7 +14,7 @@ final class GetInvoiceByIdQuery
     {
     }
 
-    public function __invoke(Uuid $id): Invoice|null
+    public function __invoke(Uuid $id): Invoice | null
     {
         return $this->repository->getById($id);
     }

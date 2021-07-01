@@ -24,7 +24,7 @@ class OpenApiResponse extends JsonResponse
         parent::__construct($content, $status, $headers, false);
     }
 
-    public static function empty(string|null $message = null, int $status = self::HTTP_NO_CONTENT): self
+    public static function empty(string | null $message = null, int $status = self::HTTP_NO_CONTENT): self
     {
         if (null === $message) {
             $message = self::$statusTexts[$status];
@@ -48,7 +48,7 @@ class OpenApiResponse extends JsonResponse
         return new self($item, null, $status);
     }
 
-    public static function notFound(string|null $message): self
+    public static function notFound(string | null $message): self
     {
         return new self(null, $message, self::HTTP_NOT_FOUND);
     }
