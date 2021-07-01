@@ -44,8 +44,13 @@ class OpenApiResponse extends JsonResponse
         return new self($resources, null, $status);
     }
 
-    public static function item(mixed $item, int $status): self
+    public static function item(mixed $item, int $status = self::HTTP_OK): self
     {
         return new self($item, null, $status);
+    }
+
+    public static function notFound(string|null $message): self
+    {
+        return new self(null, $message, self::HTTP_NOT_FOUND);
     }
 }
