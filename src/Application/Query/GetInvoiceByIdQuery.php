@@ -10,7 +10,9 @@ use Symfony\Component\Uid\Uuid;
 
 final class GetInvoiceByIdQuery
 {
-    public function __construct(private InvoiceRepository $repository) { }
+    public function __construct(private InvoiceRepository $repository)
+    {
+    }
 
     public function __invoke(Uuid $id): Invoice|null
     {

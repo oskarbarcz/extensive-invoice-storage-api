@@ -52,7 +52,7 @@ class InvoiceController extends AbstractCqrsAwareController
     ) {
         $invoice = $query(Uuid::fromString($id));
 
-        if ($invoice === null) {
+        if (null === $invoice) {
             return OpenApiResponse::notFound('Invoice were not found.');
         }
 
