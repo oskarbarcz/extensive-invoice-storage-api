@@ -56,7 +56,7 @@ class InvoiceController extends AbstractCqrsAwareController
             return OpenApiResponse::notFound('Invoice were not found.');
         }
 
-        return OpenApiResponse::item($invoice);
+        return OpenApiResponse::item($invoice->toArray());
     }
 
     #[Route(

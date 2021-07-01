@@ -15,10 +15,7 @@ final class DoctrineInvoiceRepository extends ServiceEntityRepository implements
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct(
-            $registry,
-            Invoice::class
-        );
+        parent::__construct($registry, Invoice::class);
     }
 
     public function add(Invoice $invoice): void
@@ -58,9 +55,10 @@ final class DoctrineInvoiceRepository extends ServiceEntityRepository implements
     public function getById(Uuid $id): Invoice|null
     {
         $queryBuilder = $this->createQueryBuilder('invoice');
+
         $query = $queryBuilder
             ->where('invoice.id = :id')
-            ->setParameter('id', $id)
+            ->setParameter('id', $id->toBinary())
             ->getQuery();
 
         return $query->getOneOrNullResult();

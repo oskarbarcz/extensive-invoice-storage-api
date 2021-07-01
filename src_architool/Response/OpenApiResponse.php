@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace ArchiTools\Response;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 class OpenApiResponse extends JsonResponse
 {
@@ -17,7 +16,7 @@ class OpenApiResponse extends JsonResponse
     ) {
         $content = [
             'code' => $status,
-            'message' => Response::$statusTexts[$status],
+            'message' => self::$statusTexts[$status],
             'details' => $message,
             'data' => $data,
         ];
@@ -25,10 +24,10 @@ class OpenApiResponse extends JsonResponse
         parent::__construct($content, $status, $headers, false);
     }
 
-    public static function empty(string | null $message = null, int $status = Response::HTTP_NO_CONTENT): self
+    public static function empty(string|null $message = null, int $status = self::HTTP_NO_CONTENT): self
     {
         if (null === $message) {
-            $message = Response::$statusTexts[$status];
+            $message = self::$statusTexts[$status];
         }
 
         return new self(null, $message, $status);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain;
 
+use App\Domain\Trait\SerializerTrait;
 use App\Infrastructure\Doctrine\Repository\DoctrineInvoiceRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,6 +15,8 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\Table(name: 'invoices')]
 class Invoice
 {
+    use SerializerTrait;
+
     #[ORM\Id]
     #[ORM\Column('id', type: 'uuid', unique: true)]
     private Uuid $id;
