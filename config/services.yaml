@@ -1,5 +1,5 @@
 parameters:
-
+  invoice_file_upload_path: '/application/_upload_files'
 services:
   _defaults:
     autowire: true
@@ -12,3 +12,7 @@ services:
       - '../src/Entity/'
       - '../src/Kernel.php'
       - '../src/Tests/'
+
+  App\Application\Handler\UploadInvoiceFileHandler:
+    arguments:
+      $uploadFilePath: '%invoice_file_upload_path%'

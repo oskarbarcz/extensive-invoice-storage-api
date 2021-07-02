@@ -33,6 +33,11 @@ class OpenApiResponse extends JsonResponse
         return new self(null, $message, $status);
     }
 
+    public static function ok(string $message): self
+    {
+        return new self(null, $message, self::HTTP_OK);
+    }
+
     public static function created(mixed $id, string $message): self
     {
         return new self(['id' => $id], $message, self::HTTP_CREATED);

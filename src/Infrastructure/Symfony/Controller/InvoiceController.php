@@ -9,7 +9,6 @@ use App\Application\Command\RemoveInvoiceCommand;
 use App\Application\Query\GetInvoiceByIdQuery;
 use App\Application\Query\GetInvoicesByMonthQuery;
 use ArchiTools\Response\OpenApiResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Uid\Uuid;
@@ -21,7 +20,7 @@ class InvoiceController extends AbstractCqrsAwareController
         name: 'api_invoice_create',
         methods: ['POST']
     )]
-    public function create(CreateInvoiceCommand $command): JsonResponse
+    public function create(CreateInvoiceCommand $command): OpenApiResponse
     {
         $this->handleCommand($command);
 
@@ -35,7 +34,7 @@ class InvoiceController extends AbstractCqrsAwareController
     )]
     public function getByMonth(
         GetInvoicesByMonthQuery $query, int $month, int $year
-    ): JsonResponse {
+    ): OpenApiResponse {
         $invoices = $query($month, $year);
         $status = [] === $invoices ? Response::HTTP_NO_CONTENT : Response::HTTP_OK;
 
@@ -49,7 +48,7 @@ class InvoiceController extends AbstractCqrsAwareController
     )]
     public function getInvoiceById(
         GetInvoiceByIdQuery $query, string $id
-    ) {
+    ): OpenApiResponse {
         $invoice = $query(Uuid::fromString($id));
 
         if (null === $invoice) {
@@ -66,7 +65,7 @@ class InvoiceController extends AbstractCqrsAwareController
     )]
     public function remove(
         RemoveInvoiceCommand $command
-    ): JsonResponse {
+    ): OpenApiResponse {
         $this->handleCommand($command);
 
         return OpenApiResponse::empty();

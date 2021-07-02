@@ -42,11 +42,14 @@ final class DoctrineInvoiceRepository extends ServiceEntityRepository implements
             ->expr()
             ->between('invoice.createdAt', ':start', ':end');
 
+        $start = $date->modify('first day of this month');
+        $end = $date->modify('last day of this month');
+
         $query = $queryBuilder
             ->where($between)
             // TODO: add if where we'll check if file is not null
-            ->setParameter('start', $date->modify('first day of this month'))
-            ->setParameter('end', $date->modify('last day of this month'))
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
             ->getQuery();
 
         return $query->getArrayResult();
