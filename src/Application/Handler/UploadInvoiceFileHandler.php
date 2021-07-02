@@ -3,6 +3,8 @@
 namespace App\Application\Handler;
 
 use App\Application\Command\UploadInvoiceFileCommand;
+use App\Domain\Exception\DomainLogicException;
+use App\Domain\Exception\NotFoundException;
 use App\Domain\Repository\InvoiceRepository;
 use App\Domain\Service\InvoiceFilenameGenerator;
 use App\Infrastructure\Symfony\Request\UploadedBase64File;
@@ -26,11 +28,11 @@ class UploadInvoiceFileHandler implements MessageHandlerInterface
         $invoice = $this->repository->getById($uuid);
 
         if($invoice === null){
-            dd('INVOICE NOT FOUND');
+            throw new NotFoundException('exception.invoice.not_found');
         }
 
         if($invoice->getFile()!== null){
-            dd('FILE FOR THIS INVOICE IS ALREADY SET.');
+            throw new DomainLogicException('exception.invoice.file_already_set');
         }
 
         $file = new UploadedBase64File($command->getFile(), '');

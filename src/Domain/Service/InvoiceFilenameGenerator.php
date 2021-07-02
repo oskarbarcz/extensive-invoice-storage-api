@@ -16,10 +16,10 @@ class InvoiceFilenameGenerator
 
         $mimeType = $file->getMimeType();
         $possibleExtensions = $mt->getExtensions($mimeType);
-        $extention = $possibleExtensions[0];
+        $extension = $possibleExtensions[0];
 
         $fileName = $invoice->getId()->toRfc4122();
 
-        return "{$fileName}.{$extention}";
+        return "{$fileName}.{$extension}";
     }
 }
