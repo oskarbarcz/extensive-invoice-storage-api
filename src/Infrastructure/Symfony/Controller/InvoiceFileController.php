@@ -21,4 +21,9 @@ class InvoiceFileController extends AbstractCqrsAwareController
 
         return OpenApiResponse::ok('File upload OK.');
     }
+
+    public function downloadInvoiceFile(): OpenApiResponse
+    {
+
+    }
 }
