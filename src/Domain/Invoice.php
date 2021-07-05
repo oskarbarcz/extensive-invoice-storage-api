@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain;
 
+use App\Domain\Exception\DomainLogicException;
 use App\Domain\Trait\SerializerTrait;
 use App\Infrastructure\Doctrine\Repository\DoctrineInvoiceRepository;
 use DateTimeImmutable;
@@ -71,7 +72,7 @@ class Invoice
     public function setFile(?string $file): void
     {
         if (null !== $this->file) {
-            throw new RuntimeException('Invoice file cannot be overwritten.');
+            throw DomainLogicException::translatable('exception.invoice.file_already_set');
         }
 
         $this->file = $file;
