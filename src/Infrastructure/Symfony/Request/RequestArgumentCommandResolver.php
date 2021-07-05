@@ -80,7 +80,7 @@ class RequestArgumentCommandResolver implements ArgumentValueResolverInterface
                         JsonDecode::ASSOCIATIVE => false,
                     ]
                 );
-                $content->uuid = $routeParams['id'] ?? $routeParams['uuid'] ?? null;
+                $content->id = $routeParams['id'] ?? $routeParams['uuid'] ?? null;
             } else {
                 $content = (object) ['id' => $routeParams['id'] ?? $routeParams['uuid'] ?? null];
                 if (isset($routeParams['type'])) {

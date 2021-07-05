@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace ArchiTools\Response;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 class OpenApiResponse extends JsonResponse
 {
@@ -17,7 +16,7 @@ class OpenApiResponse extends JsonResponse
     ) {
         $content = [
             'code' => $status,
-            'message' => Response::$statusTexts[$status],
+            'message' => self::$statusTexts[$status],
             'details' => $message,
             'data' => $data,
         ];
@@ -25,13 +24,18 @@ class OpenApiResponse extends JsonResponse
         parent::__construct($content, $status, $headers, false);
     }
 
-    public static function empty(string | null $message = null, int $status = Response::HTTP_NO_CONTENT): self
+    public static function empty(string | null $message = null, int $status = self::HTTP_NO_CONTENT): self
     {
         if (null === $message) {
-            $message = Response::$statusTexts[$status];
+            $message = self::$statusTexts[$status];
         }
 
         return new self(null, $message, $status);
+    }
+
+    public static function ok(string | null $message = null, array | null $data = null): self
+    {
+        return new self($data, $message, self::HTTP_OK);
     }
 
     public static function created(mixed $id, string $message): self
@@ -44,8 +48,13 @@ class OpenApiResponse extends JsonResponse
         return new self($resources, null, $status);
     }
 
-    public static function item(mixed $item, int $status): self
+    public static function item(mixed $item, int $status = self::HTTP_OK): self
     {
         return new self($item, null, $status);
+    }
+
+    public static function notFound(string | null $message): self
+    {
+        return new self(null, $message, self::HTTP_NOT_FOUND);
     }
 }

@@ -25,6 +25,7 @@ services:
     ports:
       - "80:80"
   php:
+#    user: "1000"
     build: .docker/php
     working_dir: /application
     volumes:
