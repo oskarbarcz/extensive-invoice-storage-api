@@ -4,6 +4,7 @@ namespace App\Infrastructure\Filesystem;
 
 use App\Domain\Invoice;
 use App\Domain\Repository\FileRepository;
+use Iterator;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -31,10 +32,15 @@ final class FileStorage implements FileRepository
             return null;
         }
 
-        foreach ($finder as $file) {
-            return $file;
-        }
+        return $this->firstOrNull($finder->getIterator());
+    }
 
-        return null;
+    private function firstOrNull(Iterator $iterator): SplFileInfo
+    {
+        // reset the iterator
+        $iterator->rewind();
+
+        // return first result
+        return $iterator->current();
     }
 }
