@@ -51,25 +51,25 @@ class RequestArgumentCommandResolver implements ArgumentValueResolverInterface
             throw new FileException('validation.files.invalid');
         }
 
-        if ($request->files->count()) {
-            $files = $request->files->all();
-            if (array_key_exists('image', $files)) {
-                $image = null;
-                if ($files['image'] instanceof UploadedFile) {
-                    $image = $files['image'];
-                }
-//                        yield new UploadImageCommand($image);
-                return;
-            }
-            if (array_key_exists('file', $files)) {
-                $file = null;
-                if ($files['file'] instanceof UploadedFile) {
-                    $file = $files['file'];
-                }
-//                        yield new UploadFileCommand($file, $routeParams['type'] ?? null);
-                return;
-            }
-        }
+//        if ($request->files->count()) {
+//            $files = $request->files->all();
+//            if (array_key_exists('image', $files)) {
+//                $image = null;
+//                if ($files['image'] instanceof UploadedFile) {
+//                    $image = $files['image'];
+//                }
+////                        yield new UploadImageCommand($image);
+//                return;
+//            }
+//            if (array_key_exists('file', $files)) {
+//                $file = null;
+//                if ($files['file'] instanceof UploadedFile) {
+//                    $file = $files['file'];
+//                }
+////                        yield new UploadFileCommand($file, $routeParams['type'] ?? null);
+//                return;
+//            }
+//        }
 
         if ($this->routeContainsParameter($routeParams)) {
             if (false === empty($requestContent)) {
