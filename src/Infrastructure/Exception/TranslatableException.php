@@ -14,5 +14,5 @@ interface TranslatableException
 
     public static function translatable(string $message, Throwable $previous = null): static;
 
-    public static function nonTranslatable(string $message, Throwable $previous = null):static;
+    public static function nonTranslatable(string $message, Throwable $previous = null): static;
 }

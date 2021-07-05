@@ -16,3 +16,7 @@ services:
   App\Application\Handler\UploadInvoiceFileHandler:
     arguments:
       $uploadFilePath: '%invoice_file_upload_path%'
+
+  App\Infrastructure\Filesystem\FileStorage:
+    arguments:
+      $invoiceFilesPath: '%invoice_file_upload_path%'

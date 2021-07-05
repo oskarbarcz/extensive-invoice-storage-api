@@ -26,7 +26,7 @@ class Invoice
     private string $name;
 
     #[ORM\Column('file_id', type: 'string', nullable: true)]
-    private string|null $file = null;
+    private string | null $file = null;
 
     #[ORM\Column('type', type: 'string')]
     private string $type;
@@ -63,7 +63,7 @@ class Invoice
         $this->name = $name;
     }
 
-    public function getFile(): string|null
+    public function getFile(): string | null
     {
         return $this->file;
     }

@@ -6,11 +6,10 @@ namespace App\Application\Command;
 
 class UploadInvoiceFileCommand
 {
-
     private string | null $id;
     private string $file;
 
-    public function __construct(string | null $id,string $file)
+    public function __construct(string | null $id, string $file)
     {
         $this->id = $id;
         $this->file = $file;

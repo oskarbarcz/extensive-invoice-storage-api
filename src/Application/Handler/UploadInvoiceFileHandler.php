@@ -27,16 +27,16 @@ class UploadInvoiceFileHandler implements MessageHandlerInterface
         $uuid = Uuid::fromString($command->getId());
         $invoice = $this->repository->getById($uuid);
 
-        if($invoice === null){
+        if (null === $invoice) {
             throw NotFoundException::translatable('exception.invoice.not_found');
         }
 
-        if($invoice->getFile()!== null){
+        if (null !== $invoice->getFile()) {
             throw DomainLogicException::translatable('exception.invoice.file_already_set');
         }
 
         $file = new UploadedBase64File($command->getFile(), '');
-        $fileName = InvoiceFilenameGenerator::getFileName($file,$invoice);
+        $fileName = InvoiceFilenameGenerator::getFileName($file, $invoice);
         $file->move($this->uploadFilePath, $fileName);
 
         $invoice->setFile($fileName);
