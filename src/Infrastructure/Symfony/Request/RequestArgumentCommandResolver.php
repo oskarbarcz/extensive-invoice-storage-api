@@ -58,7 +58,7 @@ class RequestArgumentCommandResolver implements ArgumentValueResolverInterface
 //                if ($files['image'] instanceof UploadedFile) {
 //                    $image = $files['image'];
 //                }
-////                        yield new UploadImageCommand($image);
+        ////                        yield new UploadImageCommand($image);
 //                return;
 //            }
 //            if (array_key_exists('file', $files)) {
@@ -66,7 +66,7 @@ class RequestArgumentCommandResolver implements ArgumentValueResolverInterface
 //                if ($files['file'] instanceof UploadedFile) {
 //                    $file = $files['file'];
 //                }
-////                        yield new UploadFileCommand($file, $routeParams['type'] ?? null);
+        ////                        yield new UploadFileCommand($file, $routeParams['type'] ?? null);
 //                return;
 //            }
 //        }

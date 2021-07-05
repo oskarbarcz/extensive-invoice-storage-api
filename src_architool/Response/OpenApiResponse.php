@@ -57,4 +57,9 @@ class OpenApiResponse extends JsonResponse
     {
         return new self(null, $message, self::HTTP_NOT_FOUND);
     }
+
+    public static function exception(string $message = null, int $code = self::HTTP_INTERNAL_SERVER_ERROR): self
+    {
+        return new self(null, $message, $code);
+    }
 }

@@ -10,7 +10,6 @@ use App\Infrastructure\Doctrine\Repository\DoctrineInvoiceRepository;
 use DateTimeImmutable;
 use DateTimeZone;
 use Doctrine\ORM\Mapping as ORM;
-use RuntimeException;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: DoctrineInvoiceRepository::class)]
