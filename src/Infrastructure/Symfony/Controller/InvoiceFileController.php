@@ -34,7 +34,7 @@ class InvoiceFileController extends AbstractCqrsAwareController
         $file = $query($id);
 
         if (null === $file) {
-            return OpenApiResponse::notFound('File for this invoice is not found.');
+            return OpenApiResponse::notFound('response.invoice_file.not_found');
         }
 
         $mimeTypeGuesser = new MimeTypes();

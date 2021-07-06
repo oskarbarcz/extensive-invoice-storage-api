@@ -24,7 +24,7 @@ class InvoiceController extends AbstractCqrsAwareController
     {
         $this->handleCommand($command);
 
-        return OpenApiResponse::created($command->getId(), 'Invoice was successfully created.');
+        return OpenApiResponse::created($command->getId(), 'response.invoice.created');
     }
 
     #[Route(
@@ -52,7 +52,7 @@ class InvoiceController extends AbstractCqrsAwareController
         $invoice = $query(Uuid::fromString($id));
 
         if (null === $invoice) {
-            return OpenApiResponse::notFound('Invoice were not found.');
+            return OpenApiResponse::notFound('response.invoice.not_found');
         }
 
         return OpenApiResponse::item($invoice->toArray());

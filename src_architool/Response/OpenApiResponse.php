@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class OpenApiResponse extends JsonResponse
 {
+    private $isError = false;
+
     private function __construct(
         mixed $data = null,
         string | null $message = null,
@@ -60,6 +62,14 @@ class OpenApiResponse extends JsonResponse
 
     public static function exception(string $message = null, int $code = self::HTTP_INTERNAL_SERVER_ERROR): self
     {
-        return new self(null, $message, $code);
+        $self= new self(null, $message, $code);
+        $self->isError = true;
+
+        return $self;
+    }
+
+    public function isError(): bool
+    {
+        return $this->isError;
     }
 }
