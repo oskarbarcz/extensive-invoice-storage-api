@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ArchiTools\Request;
 
 use App\Infrastructure\Exception\MissingRequestParameterException;
-use Exception;
+use ArchiTools\Exception\ValidationFailedException;
 use ReflectionException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
@@ -35,38 +35,40 @@ abstract class AbstractRequestCommandResolver implements ArgumentValueResolverIn
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
         $routeParams = $request->attributes->get('_route_params');
-        $requestContent = $request->getContent();
+        $jsonContent = $request->getContent();
 
-        if ($this->routeContainsParameter($routeParams)) {
-            $content = ObjectBuilder::buildFromRequest($request);
-            $requestContent = $this->serializer->serialize($content, 'json');
+        $uriHasParams = isset($routeParams['id']) || isset($routeParams['type']);
+
+        if ($uriHasParams) {
+            $array = InformationSourceMerger::buildFromRequest($request);
+            $jsonContent = json_encode($array, JSON_THROW_ON_ERROR);
         }
 
         PropertyChecker::checkProperties($argument->getType(), $request);
 
-        $object = $this->serializer->deserialize($requestContent, $argument->getType(), 'json');
+        $command = $this->serializer->deserialize($jsonContent, $argument->getType(), 'json');
+        $errors = $this->getErrors($command);
 
-        if (!empty($this->getErrors($object))) {
-            throw new Exception('Data validation failed.');
+        if (null !== $errors) {
+            throw ValidationFailedException::create($errors);
         }
 
-        yield $object;
+        yield $command;
     }
 
-    private function routeContainsParameter(array $routeParams): bool
+    protected function getErrors(object $command): array | null
     {
-        return isset($routeParams['id']) || isset($routeParams['uuid']) || isset($routeParams['type']);
-    }
+        $violationList = $this->validator->validate($command);
 
-    protected function getErrors(object $command): array
-    {
-        $validation = $this->validator->validate($command);
+        if (0 === $violationList->count()) {
+            return null;
+        }
+
         $errors = [];
-        if ($validation->count() > 0) {
-            /** @var ConstraintViolation $error */
-            foreach ($validation as $error) {
-                $errors[$error->getPropertyPath()] = $error->getMessage();
-            }
+
+        /** @var ConstraintViolation $error */
+        foreach ($violationList as $error) {
+            $errors[$error->getPropertyPath()][] = $error->getMessage();
         }
 
         return $errors;

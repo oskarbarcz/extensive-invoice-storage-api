@@ -62,7 +62,7 @@ class OpenApiResponse extends JsonResponse
 
     public static function exception(string $message = null, int $code = self::HTTP_INTERNAL_SERVER_ERROR): self
     {
-        $self= new self(null, $message, $code);
+        $self = new self(null, $message, $code);
         $self->isError = true;
 
         return $self;

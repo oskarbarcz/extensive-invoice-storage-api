@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
 /**
- * Helper class for resolving command straightly from request body
+ * Helper class for resolving command straightly from request body.
  *
  * This class just defines how do we check if we support the command. In this implementation we do this by checking
  * command namespace.

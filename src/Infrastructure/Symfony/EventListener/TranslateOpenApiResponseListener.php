@@ -7,7 +7,6 @@ namespace App\Infrastructure\Symfony\EventListener;
 use ArchiTools\Response\OpenApiResponse;
 use JsonException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -26,7 +25,7 @@ final class TranslateOpenApiResponseListener implements EventSubscriberInterface
 
     public static function getSubscribedEvents(): array
     {
-        return [KernelEvents::RESPONSE =>['translateResponse']];
+        return [KernelEvents::RESPONSE => ['translateResponse']];
     }
 
     /** @throws JsonException */
@@ -35,7 +34,7 @@ final class TranslateOpenApiResponseListener implements EventSubscriberInterface
         $response = $event->getResponse();
 
         // we're not handling
-        if(!$response instanceof OpenApiResponse){
+        if (!$response instanceof OpenApiResponse) {
             return;
         }
 
@@ -47,7 +46,7 @@ final class TranslateOpenApiResponseListener implements EventSubscriberInterface
         $response->setContent(json_encode($originalContent, JSON_THROW_ON_ERROR));
     }
 
-    private function translate(string|null $message, string $domain): string
+    private function translate(string | null $message, string $domain): string
     {
         return $this->translator->trans($message, [], $domain);
     }
