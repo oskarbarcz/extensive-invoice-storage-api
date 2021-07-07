@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Command;
 
-class RemoveInvoiceCommand
+final class RemoveInvoiceCommand
 {
     private string $id;
 
