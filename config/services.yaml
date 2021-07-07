@@ -29,6 +29,3 @@ services:
   App\Infrastructure\Symfony\EventListener\GeneralApiExceptionListener:
     arguments:
       $returnCodeMap: '%exception_to_code%'
-  App\Infrastructure\Symfony\Request\RequestCommandResolver:
-    tags:
-      - { name: controller.argument_value_resolver, priority: 50 }
