@@ -60,6 +60,11 @@ class OpenApiResponse extends JsonResponse
         return new self(null, $message, self::HTTP_NOT_FOUND);
     }
 
+    public static function validationFail(array $constraintViolations): self
+    {
+        return new self($constraintViolations, 'validation.fail', self::HTTP_BAD_REQUEST);
+    }
+
     public static function exception(string $message = null, int $code = self::HTTP_INTERNAL_SERVER_ERROR): self
     {
         $self = new self(null, $message, $code);

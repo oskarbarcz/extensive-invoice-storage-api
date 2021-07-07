@@ -68,7 +68,7 @@ abstract class AbstractRequestCommandResolver implements ArgumentValueResolverIn
 
         /** @var ConstraintViolation $error */
         foreach ($violationList as $error) {
-            $errors[$error->getPropertyPath()][] = $error->getMessage();
+            $errors[$error->getPropertyPath()] = $error->getMessage();
         }
 
         return $errors;
