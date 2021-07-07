@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Command;
 
-class UploadInvoiceFileCommand
+final class UploadInvoiceFileCommand
 {
     private string | null $id;
     private string $file;

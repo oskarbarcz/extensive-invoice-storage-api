@@ -7,7 +7,7 @@ namespace App\Application\Command;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CreateInvoiceCommand
+final class CreateInvoiceCommand
 {
     private Uuid | null $id;
 

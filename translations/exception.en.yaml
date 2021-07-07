@@ -1,0 +1,3 @@
+exception:
+  invoice:
+    file_already_set: "This invoice already has its file assigned."

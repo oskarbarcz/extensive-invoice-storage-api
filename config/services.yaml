@@ -1,5 +1,7 @@
 parameters:
   invoice_file_upload_path: '/application/_upload_files'
+  exception_to_code:
+    App\Domain\Exception\DomainLogicException: 400
 services:
   _defaults:
     autowire: true
@@ -13,10 +15,17 @@ services:
       - '../src/Kernel.php'
       - '../src/Tests/'
 
+  # APPLICATION
+
   App\Application\Handler\UploadInvoiceFileHandler:
     arguments:
       $uploadFilePath: '%invoice_file_upload_path%'
 
+  # INFRASTRUCTURE
+
   App\Infrastructure\Filesystem\FileStorage:
     arguments:
       $invoiceFilesPath: '%invoice_file_upload_path%'
+  App\Infrastructure\Symfony\EventListener\GeneralApiExceptionListener:
+    arguments:
+      $returnCodeMap: '%exception_to_code%'
