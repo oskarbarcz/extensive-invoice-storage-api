@@ -4,34 +4,32 @@ declare(strict_types=1);
 
 namespace ArchiTools\Request;
 
-
 use App\Infrastructure\Exception\MissingRequestParameterException;
+use JsonException;
 use ReflectionClass;
 use ReflectionException;
-use ReflectionProperty;
 use Symfony\Component\HttpFoundation\Request;
 
 class PropertyChecker
 {
-    /** @throws ReflectionException|MissingRequestParameterException */
+    /**
+     * @throws ReflectionException
+     * @throws MissingRequestParameterException
+     * @throws JsonException
+     */
     public static function checkProperties(string $argumentType, Request $request): void
     {
         $argumentTypeReflection = new ReflectionClass($argumentType);
         $properties = $argumentTypeReflection->getProperties();
 
+        $params = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
         foreach ($properties as $property) {
-            if (self::isParameterMissing($property, $request->getContent())) {
+            $propertyCannotBeNull = !$property->getType()?->allowsNull();
+            $propertyDoesNotExist = !array_key_exists($property->name, $params);
+
+            if ($propertyDoesNotExist && $propertyCannotBeNull) {
                 throw new MissingRequestParameterException($property->getName());
             }
         }
     }
-
-    private static function isParameterMissing(ReflectionProperty $property, string $content): bool
-    {
-        $propertyCannotBeNull = !$property->getType()?->allowsNull();
-        $propertyDoesNotExist = str_contains($content, sprintf('"%s"', $property->getName()));
-
-        return $propertyDoesNotExist && $propertyCannotBeNull;
-    }
-
 }
