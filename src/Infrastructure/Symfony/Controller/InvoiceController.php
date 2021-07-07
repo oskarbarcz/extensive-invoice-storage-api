@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Uid\Uuid;
 
-class InvoiceController extends AbstractCqrsAwareController
+final class InvoiceController extends AbstractCqrsAwareController
 {
     #[Route(
         path: 'api/v1/invoices',

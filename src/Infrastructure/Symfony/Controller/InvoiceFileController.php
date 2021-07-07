@@ -10,7 +10,7 @@ use ArchiTools\Response\OpenApiResponse;
 use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\Routing\Annotation\Route;
 
-class InvoiceFileController extends AbstractCqrsAwareController
+final class InvoiceFileController extends AbstractCqrsAwareController
 {
     #[Route(
         path: 'api/invoice-file/{id}',
@@ -21,7 +21,7 @@ class InvoiceFileController extends AbstractCqrsAwareController
     {
         $this->handleCommand($command);
 
-        return OpenApiResponse::ok('File upload OK.');
+        return OpenApiResponse::ok('response.invoice_file.ok');
     }
 
     #[Route(

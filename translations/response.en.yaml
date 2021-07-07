@@ -3,4 +3,5 @@ response:
     created: "Invoice was successfully created."
     not_found: "Invoice with given ID was not found."
   invoice_file:
+    ok: "Invoice file saved successfully."
     not_found: "File for this invoice is not found."

@@ -15,9 +15,13 @@ services:
       - '../src/Kernel.php'
       - '../src/Tests/'
 
+  # APPLICATION
+
   App\Application\Handler\UploadInvoiceFileHandler:
     arguments:
       $uploadFilePath: '%invoice_file_upload_path%'
+
+  # INFRASTRUCTURE
 
   App\Infrastructure\Filesystem\FileStorage:
     arguments:
@@ -25,3 +29,6 @@ services:
   App\Infrastructure\Symfony\EventListener\GeneralApiExceptionListener:
     arguments:
       $returnCodeMap: '%exception_to_code%'
+  App\Infrastructure\Symfony\Request\RequestCommandResolver:
+    tags:
+      - { name: controller.argument_value_resolver, priority: 50 }
