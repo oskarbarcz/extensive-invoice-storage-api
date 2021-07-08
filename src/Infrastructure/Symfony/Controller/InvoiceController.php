@@ -33,7 +33,9 @@ final class InvoiceController extends AbstractCqrsAwareController
         methods: ['GET']
     )]
     public function getByMonth(
-        GetInvoicesByMonthQuery $query, int $month, int $year
+        GetInvoicesByMonthQuery $query,
+        int $month,
+        int $year
     ): OpenApiResponse {
         $invoices = $query($month, $year);
         $status = [] === $invoices ? Response::HTTP_NO_CONTENT : Response::HTTP_OK;
@@ -47,7 +49,8 @@ final class InvoiceController extends AbstractCqrsAwareController
         methods: ['GET']
     )]
     public function getInvoiceById(
-        GetInvoiceByIdQuery $query, string $id
+        GetInvoiceByIdQuery $query,
+        string $id
     ): OpenApiResponse {
         $invoice = $query(Uuid::fromString($id));
 
