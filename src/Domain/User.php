@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain;
 
-use App\Domain\Trait\SerializerTrait;
+use App\Domain\Trait\PasswordAwareSerializerTrait;
 use App\Infrastructure\Doctrine\Repository\DoctrineUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -14,7 +14,7 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\Entity(repositoryClass: DoctrineUserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    use SerializerTrait;
+    use PasswordAwareSerializerTrait;
 
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
@@ -27,10 +27,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $name;
 
     #[ORM\Column(type: 'json')]
-    private $roles;
+    private array $roles;
 
     #[ORM\Column(type: 'string')]
-    private $password;
+    private string $password;
 
     private function __construct(Uuid $id, string $email, string $name, array $roles)
     {
