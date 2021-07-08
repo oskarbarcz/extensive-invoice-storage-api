@@ -38,9 +38,9 @@ final class CommonFixture extends Fixture
         }
 
         foreach (range(0, 10) as $k) {
-            $adminUser = User::admin(Uuid::v4(), "admin{$j}@example.com", "Admin User {$j}");
+            $adminUser = User::admin(Uuid::v4(), "admin{$k}@example.com", "Admin User {$k}");
 
-            $password = $this->hasher->hashPassword($adminUser, "admin{$j}");
+            $password = $this->hasher->hashPassword($adminUser, "admin{$k}");
             $adminUser->setHashedPassword($password);
 
             $manager->persist($adminUser);
