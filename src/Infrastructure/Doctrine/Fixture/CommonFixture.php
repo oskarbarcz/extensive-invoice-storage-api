@@ -22,17 +22,14 @@ final class CommonFixture extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        foreach (range(0, 10) as $i) {
-            $invoice = new Invoice(Uuid::v4(), "Invoice {$i}", 'cost');
-
-            $manager->persist($invoice);
-        }
+        $genericUsers = [];
 
         foreach (range(0, 10) as $j) {
             $genericUser = User::generic(Uuid::v4(), "generic{$j}@example.com", "Generic User {$j}");
 
             $password = $this->hasher->hashPassword($genericUser, "generic{$j}");
             $genericUser->setHashedPassword($password);
+            $genericUsers[] = $genericUser;
 
             $manager->persist($genericUser);
         }
@@ -44,6 +41,14 @@ final class CommonFixture extends Fixture
             $adminUser->setHashedPassword($password);
 
             $manager->persist($adminUser);
+        }
+
+        foreach (range(0, 10) as $i) {
+            foreach ($genericUsers as $l => $invoiceOwner) {
+                $invoice = new Invoice(Uuid::v4(), "Invoice {$i}{$l}", 'cost', $invoiceOwner);
+
+                $manager->persist($invoice);
+            }
         }
 
         $manager->flush();

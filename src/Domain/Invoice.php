@@ -31,14 +31,19 @@ class Invoice
     #[ORM\Column('type', type: 'string')]
     private string $type;
 
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    private User $owner;
+
     #[ORM\Column('created_at', type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
 
-    public function __construct(Uuid $id, string $name, string $type)
+    public function __construct(Uuid $id, string $name, string $type, User $owner)
     {
         $this->id = $id;
         $this->name = $name;
         $this->type = $type;
+        $this->owner = $owner;
 
         $this->createdAt = new DateTimeImmutable('now', new DateTimeZone('Europe/Warsaw'));
     }
@@ -90,5 +95,10 @@ class Invoice
     public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    public function getOwner(): User
+    {
+        return $this->owner;
     }
 }
