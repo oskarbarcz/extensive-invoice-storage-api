@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Query;
 
-
 use App\Domain\User;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;

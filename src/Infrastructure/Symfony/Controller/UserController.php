@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Symfony\Controller;
 
-
 use App\Application\Query\GetCurrentUserQuery;
 use ArchiTools\Response\OpenApiResponse;
 use Symfony\Component\Routing\Annotation\Route;
