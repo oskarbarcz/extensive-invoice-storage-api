@@ -1,0 +1,20 @@
+security:
+    encoders:
+        App\Domain\User:
+            algorithm: auto
+    enable_authenticator_manager: true
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Domain\User
+                property: email
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            lazy: true
+            provider: app_user_provider
+    access_control:
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
