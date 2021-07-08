@@ -32,23 +32,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
-    private function __construct(Uuid $id, string $email, string $name, string $password, array $roles)
+    private function __construct(Uuid $id, string $email, string $name, array $roles)
     {
         $this->id = $id;
         $this->email = $email;
         $this->name = $name;
-        $this->password = $password;
         $this->roles = $roles;
     }
 
-    public static function generic(Uuid $id, string $email, string $name, string $password): self
+    public static function generic(Uuid $id, string $email, string $name): self
     {
-        return new self($id, $email, $name, $password, ['ROLE_USER']);
+        return new self($id, $email, $name, ['ROLE_USER']);
     }
 
-    public static function admin(Uuid $id, string $email, string $name, string $password): self
+    public static function admin(Uuid $id, string $email, string $name): self
     {
-        return new self($id, $email, $name, $password, ['ROLE_ADMIN', 'ROLE_USER']);
+        return new self($id, $email, $name, ['ROLE_ADMIN', 'ROLE_USER']);
     }
 
     public function getId(): Uuid
@@ -88,6 +87,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+    public function setHashedPassword(string $password): void
+    {
+        $this->password = $password;
     }
 
     public function getSalt(): ?string

@@ -15,5 +15,5 @@ interface InvoiceRepository
 
     public function remove(Uuid $getId): void;
 
-    public function getById(Uuid $id): Invoice | null;
+    public function getById(Uuid $id): Invoice|null;
 }

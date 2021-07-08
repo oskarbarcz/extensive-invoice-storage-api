@@ -55,7 +55,7 @@ final class DoctrineInvoiceRepository extends ServiceEntityRepository implements
         return $query->getArrayResult();
     }
 
-    public function getById(Uuid $id): Invoice | null
+    public function getById(Uuid $id): Invoice|null
     {
         $queryBuilder = $this->createQueryBuilder('invoice');
 

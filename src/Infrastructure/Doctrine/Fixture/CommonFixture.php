@@ -24,18 +24,26 @@ final class CommonFixture extends Fixture
     {
         foreach (range(0, 10) as $i) {
             $invoice = new Invoice(Uuid::v4(), "Invoice {$i}", 'cost');
+
             $manager->persist($invoice);
         }
 
         foreach (range(0, 10) as $j) {
-            $password = $this->hasher->hashPassword($user);
-            $invoice = User::generic(Uuid::v4(), "generic{$j}@example.com", "Generic User {$j}");
-            $manager->persist($invoice);
+            $genericUser = User::generic(Uuid::v4(), "generic{$j}@example.com", "Generic User {$j}");
+
+            $password = $this->hasher->hashPassword($genericUser, "generic{$j}");
+            $genericUser->setHashedPassword($password);
+
+            $manager->persist($genericUser);
         }
 
         foreach (range(0, 10) as $k) {
-            $invoice = new Invoice(Uuid::v4(), "Invoice {$i}", 'cost');
-            $manager->persist($invoice);
+            $adminUser = User::admin(Uuid::v4(), "admin{$j}@example.com", "Admin User {$j}");
+
+            $password = $this->hasher->hashPassword($adminUser, "admin{$j}");
+            $adminUser->setHashedPassword($password);
+
+            $manager->persist($adminUser);
         }
 
         $manager->flush();

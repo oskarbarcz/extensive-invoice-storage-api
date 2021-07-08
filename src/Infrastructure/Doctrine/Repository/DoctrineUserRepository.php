@@ -19,7 +19,7 @@ final class DoctrineUserRepository extends ServiceEntityRepository implements Pa
 
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
-        $user->setPassword($newHashedPassword);
+        $user->setHashedPassword($newHashedPassword);
         $this->_em->persist($user);
         $this->_em->flush();
     }
