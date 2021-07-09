@@ -57,14 +57,15 @@ final class DoctrineInvoiceRepository extends ServiceEntityRepository implements
         return $query->getResult();
     }
 
-    public function getById(Uuid $id): Invoice|null
+    public function getByIdAndUser(Uuid $id, User $user): Invoice|null
     {
         $queryBuilder = $this->createQueryBuilder('invoice');
 
         $query = $queryBuilder
             ->where('invoice.id = :id')
+            ->andWhere('invoice.owner = :user')
             ->setParameter('id', $id->toBinary())
-            ->getQuery();
+            ->setParameter('user', $user->getId()->toBinary())->getQuery();
 
         return $query->getOneOrNullResult();
     }

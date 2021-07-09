@@ -40,7 +40,7 @@ final class InvoiceController extends AbstractCqrsAwareController
         int $year
     ): OpenApiResponse {
         $invoices = $query($month, $year);
-        $array = array_map(fn(Invoice $i) => $i->toArray(), $invoices);
+        $array = array_map(fn (Invoice $i) => $i->toArray(), $invoices);
 
         $status = [] === $invoices ? Response::HTTP_NO_CONTENT : Response::HTTP_OK;
 

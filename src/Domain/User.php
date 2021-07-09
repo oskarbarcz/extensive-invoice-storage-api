@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain;
 
-use App\Domain\Trait\PasswordAwareSerializerTrait;
 use App\Domain\Trait\SerializerTrait;
 use App\Infrastructure\Doctrine\Entity\SerializableReadModel;
 use App\Infrastructure\Doctrine\Repository\DoctrineUserRepository;

@@ -11,7 +11,8 @@ use Symfony\Component\Routing\Annotation\Route;
 final class UserController extends AbstractCqrsAwareController
 {
     #[Route(path: '/api/v1/users/me')]
-    public function details(GetCurrentUserQuery $query): OpenApiResponse {
+    public function details(GetCurrentUserQuery $query): OpenApiResponse
+    {
         $user = $query();
         $data = $user->toArray(false, ['password']);
 
