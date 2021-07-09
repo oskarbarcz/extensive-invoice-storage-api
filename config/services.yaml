@@ -23,9 +23,15 @@ services:
 
   # INFRASTRUCTURE
 
+  app.infrastructure.file_storage:
+    class: Symfony\Component\Finder\Finder
+    calls:
+      - in: [ '%invoice_file_upload_path%' ]
+
   App\Infrastructure\Filesystem\FileStorage:
     arguments:
-      $invoiceFilesPath: '%invoice_file_upload_path%'
+      $finder: '@app.infrastructure.file_storage'
   App\Infrastructure\Symfony\EventListener\GeneralApiExceptionListener:
     arguments:
       $returnCodeMap: '%exception_to_code%'
+

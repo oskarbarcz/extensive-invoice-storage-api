@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class CreateInvoiceCommand
 {
-    private Uuid | null $id;
+    private Uuid|null $id;
 
     #[Assert\NotBlank]
     private string $name;

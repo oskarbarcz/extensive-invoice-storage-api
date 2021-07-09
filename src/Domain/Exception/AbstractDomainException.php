@@ -14,8 +14,10 @@ abstract class AbstractDomainException extends RuntimeException implements Trans
     private bool $isTranslatable;
 
     #[Pure]
-    public static function translatable(string $message, Throwable $previous = null): static
-    {
+    public static function translatable(
+        string $message,
+        Throwable $previous = null
+    ): static {
         $self = new static($message, 0, $previous);
         $self->isTranslatable = true;
 
@@ -23,8 +25,10 @@ abstract class AbstractDomainException extends RuntimeException implements Trans
     }
 
     #[Pure]
-    public static function nonTranslatable(string $message, Throwable $previous = null): static
-    {
+    public static function nonTranslatable(
+        string $message,
+        Throwable $previous = null
+    ): static {
         $self = new static($message, 0, $previous);
         $self->isTranslatable = false;
 

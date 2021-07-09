@@ -23,7 +23,7 @@ final class GetInvoiceFileQuery
     {
         $uuid = Uuid::fromString($id);
 
-        $invoice = $this->invoiceRepository->getById($uuid);
+        $invoice = $this->invoiceRepository->getByIdAndUser($uuid);
 
         return $this->fileRepository->findFileForInvoice($invoice);
     }

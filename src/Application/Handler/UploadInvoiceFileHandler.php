@@ -27,7 +27,7 @@ class UploadInvoiceFileHandler implements MessageHandlerInterface
     public function __invoke(UploadInvoiceFileCommand $command): void
     {
         $uuid = Uuid::fromString($command->getId());
-        $invoice = $this->repository->getById($uuid);
+        $invoice = $this->repository->getByIdAndUser($uuid);
 
         if (null === $invoice) {
             throw NotFoundException::translatable('exception.invoice.not_found');

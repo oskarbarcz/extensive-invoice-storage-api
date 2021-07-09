@@ -13,10 +13,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class TranslateOpenApiResponseListener implements EventSubscriberInterface
 {
-    private TranslatorInterface $translator;
-
     private const EXCEPTION_TRANSLATION_DOMAIN = 'exception';
     private const RESPONSE_TRANSLATION_DOMAIN = 'response';
+    private TranslatorInterface $translator;
 
     public function __construct(TranslatorInterface $translator)
     {
@@ -46,7 +45,7 @@ final class TranslateOpenApiResponseListener implements EventSubscriberInterface
         $response->setContent(json_encode($originalContent, JSON_THROW_ON_ERROR));
     }
 
-    private function translate(string | null $message, string $domain): string
+    private function translate(string|null $message, string $domain): string
     {
         return $this->translator->trans($message, [], $domain);
     }

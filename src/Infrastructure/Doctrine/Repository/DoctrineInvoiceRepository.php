@@ -6,6 +6,7 @@ namespace App\Infrastructure\Doctrine\Repository;
 
 use App\Domain\Invoice;
 use App\Domain\Repository\InvoiceRepository;
+use App\Domain\User;
 use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -33,36 +34,38 @@ final class DoctrineInvoiceRepository extends ServiceEntityRepository implements
     }
 
     /** @return Invoice[] */
-    public function getByMonth(int $month, int $year): array
+    public function getByMonthAndOwner(int $month, int $year, User $owner): array
     {
-        $date = DateTimeImmutable::createFromFormat('n/Y', "{$month}/{$year}");
-
         $queryBuilder = $this->createQueryBuilder('invoice');
+
         $between = $queryBuilder
             ->expr()
             ->between('invoice.createdAt', ':start', ':end');
 
+        $date = DateTimeImmutable::createFromFormat('n/Y', "$month/$year");
         $start = $date->modify('first day of this month');
         $end = $date->modify('last day of this month');
 
         $query = $queryBuilder
-            ->where($between)
-            // TODO: add if where we'll check if file is not null
+            ->where('invoice.owner = :owner')
+            ->andWhere($between)
+            ->setParameter('owner', $owner->getId()->toBinary())
             ->setParameter('start', $start)
             ->setParameter('end', $end)
             ->getQuery();
 
-        return $query->getArrayResult();
+        return $query->getResult();
     }
 
-    public function getById(Uuid $id): Invoice | null
+    public function getByIdAndUser(Uuid $id, User $user): Invoice|null
     {
         $queryBuilder = $this->createQueryBuilder('invoice');
 
         $query = $queryBuilder
             ->where('invoice.id = :id')
+            ->andWhere('invoice.owner = :user')
             ->setParameter('id', $id->toBinary())
-            ->getQuery();
+            ->setParameter('user', $user->getId()->toBinary())->getQuery();
 
         return $query->getOneOrNullResult();
     }

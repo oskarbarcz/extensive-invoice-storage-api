@@ -12,29 +12,25 @@ use Symfony\Component\Finder\SplFileInfo;
 
 final class FileStorage implements FileRepository
 {
-    private string $invoiceFilesPath;
+    private Finder $finder;
 
-    public function __construct(string $invoiceFilesPath)
+    public function __construct(Finder $finder)
     {
-        $this->invoiceFilesPath = $invoiceFilesPath;
+        $this->finder = $finder;
     }
 
-    public function findFileForInvoice(Invoice $invoice): SplFileInfo | null
+    public function findFileForInvoice(Invoice $invoice): SplFileInfo|null
     {
-        // not autowired because it stores global state
-
-        $finder = new Finder();
-        $finder
+        $this->finder
             ->files()
-            ->in($this->invoiceFilesPath)
-        ->name($invoice->getFile());
+            ->name($invoice->getFile());
 
         // catch potential multi-file problem
-        if (!$finder->hasResults() || 1 !== $finder->count()) {
+        if (!$this->finder->hasResults() || 1 !== $this->finder->count()) {
             return null;
         }
 
-        return $this->firstOrNull($finder->getIterator());
+        return $this->firstOrNull($this->finder->getIterator());
     }
 
     private function firstOrNull(Iterator $iterator): SplFileInfo
