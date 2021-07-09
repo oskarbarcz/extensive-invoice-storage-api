@@ -4,20 +4,29 @@ declare(strict_types=1);
 
 namespace App\Domain\Trait;
 
+use App\Infrastructure\Doctrine\Entity\SerializableReadModel;
+
 /**
  * Contains method to self-serialize object
- *
- * @see PasswordAwareSerializerTrait if using field for password
  */
 trait SerializerTrait
 {
-    public function toArray(): array
+    public function toArray($recursive = false, array $withoutFields = []): array
     {
-        $array = [];
+        $properties = [];
+
         foreach ($this as $key => $value) {
-            $array[$key] = $value;
+            if (in_array($key, $withoutFields)) {
+                continue;
+            }
+
+            if (!$recursive && $value instanceof SerializableReadModel) {
+                continue;
+            }
+
+            $properties[$key] = $value;
         }
 
-        return $array;
+        return $properties;
     }
 }

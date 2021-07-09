@@ -8,6 +8,7 @@ use App\Application\Command\CreateInvoiceCommand;
 use App\Application\Command\RemoveInvoiceCommand;
 use App\Application\Query\GetInvoiceByIdQuery;
 use App\Application\Query\GetInvoicesByMonthQuery;
+use App\Domain\Invoice;
 use ArchiTools\Response\OpenApiResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,8 +21,9 @@ final class InvoiceController extends AbstractCqrsAwareController
         name: 'api_invoice_create',
         methods: ['POST']
     )]
-    public function create(CreateInvoiceCommand $command): OpenApiResponse
-    {
+    public function create(
+        CreateInvoiceCommand $command
+    ): OpenApiResponse {
         $this->handleCommand($command);
 
         return OpenApiResponse::created($command->getId(), 'response.invoice.created');
@@ -38,9 +40,11 @@ final class InvoiceController extends AbstractCqrsAwareController
         int $year
     ): OpenApiResponse {
         $invoices = $query($month, $year);
+        $array = array_map(fn(Invoice $i) => $i->toArray(), $invoices);
+
         $status = [] === $invoices ? Response::HTTP_NO_CONTENT : Response::HTTP_OK;
 
-        return OpenApiResponse::collection($invoices, $status);
+        return OpenApiResponse::collection($array, $status);
     }
 
     #[Route(

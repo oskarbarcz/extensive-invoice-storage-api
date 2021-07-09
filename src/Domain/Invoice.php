@@ -6,6 +6,7 @@ namespace App\Domain;
 
 use App\Domain\Exception\DomainLogicException;
 use App\Domain\Trait\SerializerTrait;
+use App\Infrastructure\Doctrine\Entity\SerializableReadModel;
 use App\Infrastructure\Doctrine\Repository\DoctrineInvoiceRepository;
 use DateTimeImmutable;
 use DateTimeZone;
@@ -14,7 +15,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: DoctrineInvoiceRepository::class)]
 #[ORM\Table(name: 'invoices')]
-class Invoice
+class Invoice implements SerializableReadModel
 {
     use SerializerTrait;
 

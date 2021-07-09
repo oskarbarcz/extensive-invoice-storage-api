@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Domain;
 
 use App\Domain\Trait\PasswordAwareSerializerTrait;
+use App\Domain\Trait\SerializerTrait;
+use App\Infrastructure\Doctrine\Entity\SerializableReadModel;
 use App\Infrastructure\Doctrine\Repository\DoctrineUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -12,9 +14,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: DoctrineUserRepository::class)]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, SerializableReadModel
 {
-    use PasswordAwareSerializerTrait;
+    use SerializerTrait;
 
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
