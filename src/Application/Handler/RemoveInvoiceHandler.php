@@ -22,6 +22,5 @@ class RemoveInvoiceHandler implements MessageHandlerInterface
     {
         $id = Uuid::fromString($command->getId());
         $this->repository->remove($id);
-        // TODO: remove also connected file
     }
 }

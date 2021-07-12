@@ -21,11 +21,7 @@ final class InvoiceFileController extends AbstractCqrsAwareController
         return OpenApiResponse::ok('response.invoice_file.ok');
     }
 
-    #[Route(
-        path: 'invoice-file/{id}',
-        name: 'api_invoice_download',
-        methods: ['GET']
-    )]
+    #[Route(path: 'invoice-file/{id}', name: 'api_invoice_download', methods: ['GET'])]
     public function downloadInvoiceFile(GetInvoiceFileQuery $query, string $id): OpenApiResponse
     {
         $file = $query($id);
