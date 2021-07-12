@@ -14,31 +14,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Uid\Uuid;
 
+#[Route(path: 'api/v1')]
 final class InvoiceController extends AbstractCqrsAwareController
 {
-    #[Route(
-        path: 'api/v1/invoices',
-        name: 'api_invoice_create',
-        methods: ['POST']
-    )]
-    public function create(
-        CreateInvoiceCommand $command
-    ): OpenApiResponse {
+    #[Route(path: '/invoices', name: 'api_invoice_create', methods: ['POST'])]
+    public function create(CreateInvoiceCommand $command): OpenApiResponse
+    {
         $this->handleCommand($command);
 
         return OpenApiResponse::created($command->getId(), 'response.invoice.created');
     }
 
-    #[Route(
-        path: 'api/v1/invoices/by-month/{year}/{month}',
-        name: 'api_invoice_get-by-month',
-        methods: ['GET']
-    )]
-    public function getByMonth(
-        GetInvoicesByMonthQuery $query,
-        int $month,
-        int $year
-    ): OpenApiResponse {
+    #[Route(path: '/invoices/by-month/{year}/{month}', name: 'api_invoice_get-by-month', methods: ['GET'])]
+    public function getByMonth(GetInvoicesByMonthQuery $query, int $month, int $year): OpenApiResponse
+    {
         $invoices = $query($month, $year);
         $array = array_map(fn (Invoice $i) => $i->toArray(), $invoices);
 
@@ -47,15 +36,9 @@ final class InvoiceController extends AbstractCqrsAwareController
         return OpenApiResponse::collection($array, $status);
     }
 
-    #[Route(
-        path: 'api/v1/invoices/{id}',
-        name: 'api_invoice_get-by-id',
-        methods: ['GET']
-    )]
-    public function getInvoiceById(
-        GetInvoiceByIdQuery $query,
-        string $id
-    ): OpenApiResponse {
+    #[Route(path: '/invoices/{id}', name: 'api_invoice_get-by-id', methods: ['GET'])]
+    public function getInvoiceById(GetInvoiceByIdQuery $query, string $id): OpenApiResponse
+    {
         $invoice = $query(Uuid::fromString($id));
 
         if (null === $invoice) {
@@ -65,14 +48,9 @@ final class InvoiceController extends AbstractCqrsAwareController
         return OpenApiResponse::item($invoice->toArray());
     }
 
-    #[Route(
-        path: 'api/v1/invoices/{id}',
-        name: 'api_invoice_remove',
-        methods: ['DELETE']
-    )]
-    public function remove(
-        RemoveInvoiceCommand $command
-    ): OpenApiResponse {
+    #[Route(path: '/invoices/{id}', name: 'api_invoice_remove', methods: ['DELETE'])]
+    public function remove(RemoveInvoiceCommand $command): OpenApiResponse
+    {
         $this->handleCommand($command);
 
         return OpenApiResponse::empty();
