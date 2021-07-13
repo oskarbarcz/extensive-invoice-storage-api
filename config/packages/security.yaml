@@ -10,10 +10,10 @@ security:
         property: email
   firewalls:
     login:
-      pattern: ^/api/login
+      pattern: ^/api/v1/login
       stateless: true
       json_login:
-        check_path: /api/login_check
+        check_path: /api/v1/login
         success_handler: lexik_jwt_authentication.handler.authentication_success
         failure_handler: lexik_jwt_authentication.handler.authentication_failure
     api:
@@ -21,5 +21,5 @@ security:
       stateless: true
       jwt: ~
   access_control:
-    - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/api/v1/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
