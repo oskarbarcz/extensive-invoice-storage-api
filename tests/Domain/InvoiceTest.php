@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Domain;
+namespace Tests\Domain;
 
 use App\Domain\Exception\DomainLogicException;
 use App\Domain\Invoice;
@@ -13,24 +13,27 @@ use Symfony\Component\Uid\Uuid;
 
 class InvoiceTest extends TestCase
 {
-    public function testInvoiceFileShouldNotAllowOverwrite(): void
-    {
-        $testUser = $this->createStub(User::class);
+    private Invoice $sut;
 
-        $invoice = self::createTestInvoice($testUser);
-        $invoice->setFile('test_file.pdf');
-
-        // try to override
-        self::expectException(DomainLogicException::class);
-        $invoice->setFile('another_file.pdf');
-    }
-
-    public static function createTestInvoice(User $user): Invoice
+    protected function setUp(): void
     {
         $id = Uuid::v4();
         $name = 'Test Invoice';
         $type = new InvoiceType('cost');
+        $user = $this->createStub(User::class);
 
-        return new Invoice($id, $name, $type->toString(), $user);
+        $this->sut = new Invoice($id, $name, $type->toString(), $user);
+    }
+
+    /**
+     * This method should not allow file to be overwritten
+     */
+    public function testSetFile(): void
+    {
+        $this->sut->setFile('test_file.pdf');
+
+        // try to override
+        self::expectException(DomainLogicException::class);
+        $this->sut->setFile('another_file.pdf');
     }
 }

@@ -1,5 +1,5 @@
 security:
-  encoders:
+  password_hashers:
     App\Domain\User:
       algorithm: auto
   enable_authenticator_manager: true
@@ -9,14 +9,11 @@ security:
         class: App\Domain\User
         property: email
   firewalls:
-    dev:
-      pattern: ^/(_(profiler|wdt)|css|images|js)/
-      security: false
     login:
-      pattern: ^/api/v1/login
+      pattern: ^/api/login
       stateless: true
       json_login:
-        check_path: /api/v1/login
+        check_path: /api/login_check
         success_handler: lexik_jwt_authentication.handler.authentication_success
         failure_handler: lexik_jwt_authentication.handler.authentication_failure
     api:
@@ -24,5 +21,5 @@ security:
       stateless: true
       jwt: ~
   access_control:
-    - { path: ^/api/v1/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
