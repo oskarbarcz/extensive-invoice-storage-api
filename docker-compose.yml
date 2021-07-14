@@ -28,6 +28,8 @@ services:
   php:
     build: .docker/php
     working_dir: /application
+    environment:
+      PHP_IDE_CONFIG: "serverName=Docker"
     volumes:
       - .:/application
       - ./.docker/php/php-ini-overrides.ini:/etc/php/8.0/fpm/conf.d/99-overrides.ini

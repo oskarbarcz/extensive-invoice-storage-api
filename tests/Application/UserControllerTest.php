@@ -2,10 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Tests\Infrastructure\Symfony\Controller;
+namespace Tests\Application;
 
-use Tests\TestCase\ApiTestCase;
+use App\Infrastructure\Symfony\Controller\UserController;
+use Tests\Utilities\ApiTestCase;
 
+/**
+ * Tests user ability to log in and check its data
+ *
+ * @see UserController
+ */
 class UserControllerTest extends ApiTestCase
 {
     public function testLogInWithCorrectCredentials(): void
@@ -28,7 +34,6 @@ class UserControllerTest extends ApiTestCase
 
     public function testLogInWithIncorrectCredentials(): void
     {
-
         $input = [
             'username' => 'generic1@example.com',
             'password' => 'some-incorrect-password',
